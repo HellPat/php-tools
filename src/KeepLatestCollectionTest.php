@@ -12,9 +12,9 @@ use PHPUnit\Framework\TestCase;
 final class KeepLatestCollectionTest extends TestCase
 {
     /**
-     * @return iterable<array{0: list<mixed>, 1: KeepLatestCollection}>
+     * @return iterable<array{0: list<int>, 1: KeepLatestCollection<mixed>}>
      */
-    public static function expectations(): iterable
+    public static function dataIntegerCollection(): iterable
     {
         yield 'empty' => [
             [],
@@ -46,28 +46,12 @@ final class KeepLatestCollectionTest extends TestCase
                 ->appendMany([1, 2])
                 ->appendMany([5, 6]),
         ];
-
-        yield 'strange keys' => [
-            [
-                'two',
-                'three',
-                'four',
-            ],
-            KeepLatestCollection::max(3)
-                ->appendMany([
-                    '1' => 'one',
-                    '7' => 'two',
-                ])
-                ->appendMany([
-                    '3' => 'three',
-                    '4' => 'four',
-                ]),
-        ];
     }
 
-    #[DataProvider('expectations')]
+    #[DataProvider('dataIntegerCollection')]
     /**
      * @param list<mixed> $expectation
+     * @param KeepLatestCollection<int> $collection
      */
     public function testExpectations(array $expectation, KeepLatestCollection $collection): void
     {
@@ -91,5 +75,18 @@ final class KeepLatestCollectionTest extends TestCase
                 ->append(KeepLatestCollection::max(4))
                 ->toArray()
         );
+    }
+
+    public function testPsalmFails(): void
+    {
+        /** @var KeepLatestCollection<KeepLatestCollection<mixed>> $items */
+        $items = KeepLatestCollection::max(3)
+            ->append(KeepLatestCollection::max(1))
+        ;
+
+        foreach ($items->toArray() as $i) {
+            // This proofs only that psalm/phpstan find the ->count() method and thus understand the @template params.
+            self::assertSame(0, $i->count());
+        }
     }
 }

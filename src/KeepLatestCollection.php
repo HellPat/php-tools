@@ -6,16 +6,19 @@ namespace Hellpat\Tools;
 
 use function Psl\Vec\values;
 
+/**
+ * @template T
+ */
 final class KeepLatestCollection implements \Countable
 {
     /**
-     * @var list<mixed>
+     * @var list<T>
      */
     private array $items;
 
     /**
      * @param positive-int $limit
-     * @param list<mixed> $items
+     * @param list<T> $items
      */
     private function __construct(
         private readonly int $limit,
@@ -24,25 +27,27 @@ final class KeepLatestCollection implements \Countable
         $this->items = array_slice($items, -$this->limit);
     }
 
+    /**
+     * @param positive-int $limit
+     * @return self<T>
+     */
     public static function max(int $limit): self
     {
-        if ($limit < 1) {
-            // the check is here for performance reasons,
-            // when chaining stuff the limit is validated only once,
-            // and it's readonly then.
-            throw new \LogicException('A limit < 1 does not make any sense');
-        }
-
         return new self($limit, []);
     }
 
+    /**
+     * @param T $added
+     * @return self<T>
+     */
     public function append(mixed $added): self
     {
         return $this->appendMany([$added]);
     }
 
     /**
-     * @param array<mixed> $added
+     * @param array<T> $added
+     * @return self<T>
      */
     public function appendMany(array $added): self
     {
@@ -58,7 +63,7 @@ final class KeepLatestCollection implements \Countable
     }
 
     /**
-     * @return list<mixed>
+     * @return list<T>
      */
     public function toArray(): array
     {
