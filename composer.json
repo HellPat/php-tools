@@ -1,7 +1,7 @@
 {
     "name": "hellpat/php-tools",
     "description": "Some tools that I don't maintain. Only for copy & paste.",
-    "type": "project",
+    "type": "package",
     "license": "MIT",
     "autoload": {
         "psr-4": {
