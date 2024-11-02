@@ -1,7 +1,7 @@
 {
     "name": "hellpat/php-tools",
     "description": "Some tools that I don't maintain. Only for copy & paste.",
-    "type": "package",
+    "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
@@ -16,12 +16,18 @@
     ],
     "require": {
         "php": "^8.3",
-        "azjezz/psl": "^3.0"
+        "azjezz/psl": "^3.0",
+        "roave/you-are-using-it-wrong": "^1.15"
     },
     "require-dev": {
         "vimeo/psalm": "^5.26",
         "phpunit/phpunit": "^10.5",
         "phpstan/phpstan": "^1.12",
         "symplify/easy-coding-standard": "^12.3"
+    },
+    "config": {
+        "allow-plugins": {
+            "roave/you-are-using-it-wrong": true
+        }
     }
 }
