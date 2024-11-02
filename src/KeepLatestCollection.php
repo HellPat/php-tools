@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Hellpat\Tools;
 
+use function Psl\Vec\values;
+
 final class KeepLatestCollection implements \Countable
 {
+    /**
+     * @var list<mixed>
+     */
     private array $items;
 
     /**
@@ -16,9 +21,7 @@ final class KeepLatestCollection implements \Countable
         private readonly int $limit,
         array $items,
     ) {
-        $this->items = count($items) <= $this->limit
-            ? $items
-            : array_slice($items, -$this->limit);
+        $this->items = array_slice($items, -$this->limit);
     }
 
     public static function max(int $limit): self
@@ -38,9 +41,12 @@ final class KeepLatestCollection implements \Countable
         return $this->appendMany([$added]);
     }
 
+    /**
+     * @param array<mixed> $added
+     */
     public function appendMany(array $added): self
     {
-        return new self($this->limit, array_merge($this->items, $added));
+        return new self($this->limit, values(array_merge($this->items, $added)));
     }
 
     #[\Override]
@@ -49,6 +55,9 @@ final class KeepLatestCollection implements \Countable
         return count($this->items);
     }
 
+    /**
+     * @return list<mixed>
+     */
     public function toArray(): array
     {
         return $this->items;

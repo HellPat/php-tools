@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method Hellpat\\\\Tools\\\\KeepLatestCollectionTest\\:\\:testExpectations\\(\\) has parameter \\$expectation with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/KeepLatestCollectionTest.php

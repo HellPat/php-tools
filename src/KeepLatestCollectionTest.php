@@ -11,7 +11,10 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(KeepLatestCollection::class)]
 final class KeepLatestCollectionTest extends TestCase
 {
-    public static function data_sets(): iterable
+    /**
+     * @return iterable<array{0: list<mixed>, 1: KeepLatestCollection}>
+     */
+    public static function expectations(): iterable
     {
         yield 'empty' => [
             [],
@@ -62,14 +65,18 @@ final class KeepLatestCollectionTest extends TestCase
         ];
     }
 
-    #[DataProvider('data_sets')]
-    public function testExpectations(mixed $expectation, KeepLatestCollection $collection)
+    #[DataProvider('expectations')]
+    /**
+     * @param list<mixed> $expectation
+     */
+    public function testExpectations(array $expectation, KeepLatestCollection $collection): void
     {
         self::assertSame($expectation, $collection->toArray());
+        self::assertSame(count($expectation), $collection->count());
         self::assertCount(count($expectation), $collection);
     }
 
-    public function testObjects()
+    public function testWithObjects(): void
     {
         self::assertEquals(
             [

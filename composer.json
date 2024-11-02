@@ -15,7 +15,8 @@
         }
     ],
     "require": {
-        "php": "^8.3"
+        "php": "^8.3",
+        "azjezz/psl": "^3.0"
     },
     "require-dev": {
         "vimeo/psalm": "^5.26",
