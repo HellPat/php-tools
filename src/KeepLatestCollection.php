@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hellpat\Tools;
 
 final class KeepLatestCollection implements \Countable
@@ -14,9 +16,9 @@ final class KeepLatestCollection implements \Countable
         private readonly int $limit,
         array $items,
     ) {
-            $this->items = count($items) <= $this->limit
-                ? $items
-                : array_slice($items, -$this->limit);
+        $this->items = count($items) <= $this->limit
+            ? $items
+            : array_slice($items, -$this->limit);
     }
 
     public static function max(int $limit): self
@@ -36,16 +38,13 @@ final class KeepLatestCollection implements \Countable
         return $this->appendMany([$added]);
     }
 
-    /**
-     * @param array $added
-     * @return self
-     */
     public function appendMany(array $added): self
     {
         return new self($this->limit, array_merge($this->items, $added));
     }
 
-    #[\Override] public function count(): int
+    #[\Override]
+    public function count(): int
     {
         return count($this->items);
     }

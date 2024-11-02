@@ -20,6 +20,7 @@
     "require-dev": {
         "vimeo/psalm": "^5.26",
         "phpunit/phpunit": "^10.5",
-        "phpstan/phpstan": "^1.12"
+        "phpstan/phpstan": "^1.12",
+        "symplify/easy-coding-standard": "^12.3"
     }
 }
