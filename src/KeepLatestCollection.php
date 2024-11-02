@@ -46,7 +46,9 @@ final class KeepLatestCollection implements \Countable
      */
     public function appendMany(array $added): self
     {
-        return new self($this->limit, values(array_merge($this->items, $added)));
+        return count($added) < $this->limit
+            ? new self($this->limit, values(array_merge($this->items, $added)))
+            : new self($this->limit, values($added));
     }
 
     #[\Override]
