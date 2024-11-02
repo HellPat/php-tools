@@ -1,6 +1,6 @@
 {
     "name": "hellpat/php-tools",
-    "description": "Some tools that I don't maintain. Only for copy & paste.",
+    "description": "A collection of small helper tools, that are not worth distributing in separate packages",
     "type": "library",
     "license": "MIT",
     "autoload": {
